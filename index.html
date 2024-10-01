@@ -6,20 +6,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
 
-  <!-- calls for the arcgis api's CSS file and JS library. -->
+  <!-- Include the ArcGIS API's CSS file and JS library. -->
   <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
   <script src="https://js.arcgis.com/4.30/"></script>
 
   <!-- Adding the modules, API key, and map constant needed for a full screen map app -->
   <script>
-  
     require([
-     "esri/config",
+      "esri/config",
       "esri/Map",
       "esri/views/MapView",
       "esri/layers/GraphicsLayer",
       "esri/Graphic"
-    ], function (esriConfig,Map, MapView,GraphicsLayer,Graphic) {
+    ], function (esriConfig, Map, MapView, GraphicsLayer, Graphic) {
 
       esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurNAUgv3aeRUmzJ4ckMevLQKGrztJzvz8D2QfKCuiIu54kuPlJgQ5LaYndfRIaWOj-l62Dkhw1ar_Y7pSWDINLJdo0SOuys_MN4exQu3ZCeYZLk9JtMFQfS8DTHxOhq5pm0i-sjFpuDWcC71yFMKkj_2DFL528sZRGUlAOs6-ULTW8bY3iTtCMjOBFA05re8GpjKasI2A5QamySWtbjhq0SU.AT1_pCWailZs";
       const map = new Map({
@@ -27,11 +26,11 @@
       });
 
       const view = new MapView({
-          map: map,
-          center: [-97.7431, 30.2672], // Longitude, latitude
-          zoom: 13, // Zoom level
-          container: "viewDiv" // Div element
-        });
+        map: map,
+        center: [-97.7431, 30.2672], // Longitude, latitude
+        zoom: 13, // Zoom level
+        container: "viewDiv" // Div element
+      });
 
       // Create a GraphicsLayer
       const graphicsLayer = new GraphicsLayer();
@@ -40,14 +39,25 @@
       // Create a point geometry
       const point = {
         type: "point",
-        longitude: -97.750689, //long lat of Stevie Ray Vaughan Statue
+        longitude: -97.750689, // Stevie Ray Vaughan Statue long lat
         latitude: 30.263098
+      };
+
+      // Define the popupTemplate and attributes
+      const popupTemplate = {
+        title: "{Name}",
+        content: "{Description}"
+      };
+
+      const attributes = {
+        Name: "Stevie Ray Vaughan Statue",
+        Description: "A bronze sculpture of Stevie Ray Vaughan by Ralph Helmick"
       };
 
       // Create a symbol for drawing the point
       const simpleMarkerSymbol = {
         type: "simple-marker",
-        style: "diamond",    //challange 1 - change the style to diamond
+        style: "diamond", // Change the style to diamond
         color: [0, 0, 139], // Blue
         outline: {
           color: [255, 255, 255], // White
@@ -55,19 +65,20 @@
         }
       };
 
-      // Create a graphic and add the geometry and symbol to it
+      // Create a graphic and add the geometry, symbol, attributes, and popupTemplate to it
       const pointGraphic = new Graphic({
         geometry: point,
-        symbol: simpleMarkerSymbol
+        symbol: simpleMarkerSymbol,
+        attributes: attributes,
+        popupTemplate: popupTemplate
       });
 
       // Add the graphic to the view's graphics layer
       graphicsLayer.add(pointGraphic);
-
     });
   </script>
 
-  <!-- css to make a full screen map -->
+  <!-- CSS to make a full screen map -->
   <style>
     html,
     body,
@@ -78,12 +89,9 @@
       width: 100%;
     }
   </style>
-
 </head>
 <body>
-
-  <!-- the div to displays the map  -->
+  <!-- The div to display the map -->
   <div id="viewDiv"></div>
-
 </body>
 </html>
