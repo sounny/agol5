@@ -16,8 +16,10 @@
     require([
      "esri/config",
       "esri/Map",
-      "esri/views/MapView"
-    ], function (esriConfig,Map, MapView) {
+      "esri/views/MapView",
+      "esri/layers/GraphicsLayer",
+      "esri/Graphic"
+    ], function (esriConfig,Map, MapView,GraphicsLayer,Graphic) {
 
       esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurNAUgv3aeRUmzJ4ckMevLQKGrztJzvz8D2QfKCuiIu54kuPlJgQ5LaYndfRIaWOj-l62Dkhw1ar_Y7pSWDINLJdo0SOuys_MN4exQu3ZCeYZLk9JtMFQfS8DTHxOhq5pm0i-sjFpuDWcC71yFMKkj_2DFL528sZRGUlAOs6-ULTW8bY3iTtCMjOBFA05re8GpjKasI2A5QamySWtbjhq0SU.AT1_pCWailZs";
       const map = new Map({
@@ -30,6 +32,37 @@
           zoom: 13, // Zoom level
           container: "viewDiv" // Div element
         });
+
+      // Create a GraphicsLayer
+      const graphicsLayer = new GraphicsLayer();
+      map.add(graphicsLayer);
+
+      // Create a point geometry
+      const point = {
+        type: "point",
+        longitude: -97.750689, //long lat of Stevie Ray Vaughan Statue
+        latitude: 30.263098
+      };
+
+      // Create a symbol for drawing the point
+      const simpleMarkerSymbol = {
+        type: "simple-marker",
+        color: [0, 0, 139], // Blue
+        outline: {
+          color: [255, 255, 255], // White
+          width: 1
+        }
+      };
+
+      // Create a graphic and add the geometry and symbol to it
+      const pointGraphic = new Graphic({
+        geometry: point,
+        symbol: simpleMarkerSymbol
+      });
+
+      // Add the graphic to the view's graphics layer
+      graphicsLayer.add(pointGraphic);
+
     });
   </script>
 
