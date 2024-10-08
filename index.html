@@ -21,7 +21,7 @@
       "esri/geometry/Point",
       "esri/symbols/SimpleMarkerSymbol",
       "esri/PopupTemplate"
-    ], function (esriConfig, Map, MapView, GraphicsLayer, Graphic, Point, SimpleMarkerSymbol,popupTemplate) {
+    ], function (esriConfig, Map, MapView, GraphicsLayer, Graphic, Point, SimpleMarkerSymbol,PopupTemplate) {
 
       esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurNAUgv3aeRUmzJ4ckMevLQKGrztJzvz8D2QfKCuiIu54kuPlJgQ5LaYndfRIaWOj-l62Dkhw1ar_Y7pSWDINLJdo0SOuys_MN4exQu3ZCeYZLk9JtMFQfS8DTHxOhq5pm0i-sjFpuDWcC71yFMKkj_2DFL528sZRGUlAOs6-ULTW8bY3iTtCMjOBFA05re8GpjKasI2A5QamySWtbjhq0SU.AT1_pCWailZs";
       
@@ -58,10 +58,10 @@
       };
 
       // Define the popup template
-      const popupTemplate = {
+      let popupTemplate =  new PopupTemplate({
         title: "Stevie Ray Vaughan Statue",
         content: "<img src='stevieray.jpg' alt='Stevie Ray Vaughan Statue' style='width:100%;'>"
-      };
+      });
 
       // Create a graphic and add the geometry, symbol, attributes, and popupTemplate to it
       const pointGraphic = new Graphic({
