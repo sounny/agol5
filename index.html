@@ -25,7 +25,7 @@
       "esri/layers/FeatureLayer"
     ], function (esriConfig, Map, MapView, GraphicsLayer, Graphic, Point, SimpleMarkerSymbol,PopupTemplate,FeatureLayer) {
 
-      esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurNAUgv3aeRUmzJ4ckMevLQKGrztJzvz8D2QfKCuiIu54kuPlJgQ5LaYndfRIaWOj-l62Dkhw1ar_Y7pSWDINLJdo0SOuys_MN4exQu3ZCeYZLk9JtMFQfS8DTHxOhq5pm0i-sjFpuDWcC71yFMKkj_2DFL528sZRGUlAOs6-ULTW8bY3iTtCMjOBFA05re8GpjKasI2A5QamySWtbjhq0SU.AT1_pCWailZs";
+      esriConfig.apiKey = "AAPT85fOqywZsicJupSmVSCGrjkcQuDL64h9yc6zYDGZgTG5GLSQkh-jpW-jiGwX8P1YnF3_URtGGIfMk-nZfXmtXjee59-m_LTDGKb56orcPGm6CwfssjyCFw5cjvbk3Dwi6zfmR8gnF-X5-kPbcfDnjSjDmJ_nSLIdWBFzWjSsyGOe0ZgPGTXIi-vL4GxYiXt_3_CsHaj-jxTfFK2AkwfJpNMGvKTkjJTYulMvmAYdUhU.AT2_pCWailZs-l62Dkhw1ar_Y7pSWDINLJdo0SOuys_MN4exQu3ZCeYZLk9JtMFQfS8DTHxOhq5pm0i-sjFpuDWcC71yFMKkj_2DFL528sZRGUlAOs6-ULTW8bY3iTtCMjOBFA05re8GpjKasI2A5QamySWtbjhq0SU.AT1_pCWailZs";
       
       const map = new Map({
         basemap: "arcgis-topographic" // Basemap layer
@@ -75,11 +75,45 @@
       // Add the graphic to the view's graphics layer
       graphicsLayer.add(pointGraphic);
 
-      // Create a FeatureLayer
-      const usaeduLayer = new FeatureLayer({
-        url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer" // URL from AGOL Item Page
-      });
+      // Define a pop-up for usaeduLayer
+const popupEduusa = {
+  "title": "EDUs",
+  "content": "<b>Name:</b> {INSTNM}<br><b>Total Enrollment:</b> {INSTSIZE}<br>"
+}
+
+
+// Create a FeatureLayer
+const usaeduLayer = new FeatureLayer({
+  url: "https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Colleges_and_Universities_View/FeatureServer", // URL from AGOL Item Page
+  
+  //adding the popup here
+  outFields: ["INSTNM","INSTSIZE"],
+  popupTemplate: popupEduusa
+});
+      
+      
       map.add(usaeduLayer);
+
+
+       // Define the popup template for the US_Airports layer
+       const popupTemplateAirports = new PopupTemplate({
+        title: "{Fac_Name}",
+        content: "<b>Facility Type:</b> {Fac_Type}<br>" +
+                 "<b>Location ID:</b> {Loc_Id}<br>" +
+                 "<b>City:</b> {City}<br>" +
+                 "<b>State:</b> {State_Name}<br>" +
+                 "<b>County:</b> {County}<br>"
+      });
+
+      // Create the US_Airports FeatureLayer
+      const airportsLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports/FeatureServer",
+        outFields: ["Fac_Name", "Fac_Type", "Loc_Id", "City", "State_Name", "County"],
+        popupTemplate: popupTemplateAirports
+      });
+
+      // Add the layer to the map
+      map.add(airportsLayer);
 
 
     });
