@@ -104,12 +104,22 @@ const usaeduLayer = new FeatureLayer({
                  "<b>State:</b> {State_Name}<br>" +
                  "<b>County:</b> {County}<br>"
       });
-
+      
+      const airportRenderer = {
+        "type": "simple",
+        "symbol": {
+          "type": "picture-marker",
+          "url": "https://sounny.github.io/agol5/local_airport_24dp_E8EAED.png",
+          "width": "18px",
+          "height": "18px"
+        }
+      }
       // Create the US_Airports FeatureLayer
       const airportsLayer = new FeatureLayer({
         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_Airports/FeatureServer",
         outFields: ["Fac_Name", "Fac_Type", "Loc_Id", "City", "State_Name", "County"],
-        popupTemplate: popupTemplateAirports
+        popupTemplate: popupTemplateAirports,
+        renderer: airportRenderer
       });
 
       // Add the layer to the map
